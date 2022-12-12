@@ -1,0 +1,14 @@
+{
+  "name": "@contexer/base",
+  "version": "0.0.0",
+  "scripts": {},
+  "dependencies": {
+    "eventemitter3": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.3"
+  }
+}
