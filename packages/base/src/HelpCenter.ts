@@ -1,5 +1,5 @@
-import { EventEmitter } from "eventemitter3"
-import merge from "lodash.merge"
+import { EventEmitter } from "eventemitter3";
+import merge from "lodash.merge";
 import {
   DEFAULT_PARAMS,
   ContexerLaunchError,
@@ -7,10 +7,10 @@ import {
   ContexerLaunchSessionParams,
   ContexerLaunchStatus,
   ContexerParams,
-} from "./config"
-import { version } from "../package.json"
+} from "./config";
+import { version } from "../package.json";
 
-const MAX_LAUNCH_RETRY = 10
+const MAX_LAUNCH_RETRY = 10;
 
 /**
  * ContexerImporter class manages the iframe
@@ -18,41 +18,43 @@ const MAX_LAUNCH_RETRY = 10
  * and emits events based on what happens
  */
 export class ContexerImporterClass extends EventEmitter {
-  #params: ContexerParams
-  iframe?: HTMLIFrameElement
-  _client = "Importer"
-  _version = version
-  _hasLaunched = false
-  _hasCancelled = false
-  static #isLoaded = false
+  #params: ContexerParams;
+  iframe?: HTMLIFrameElement;
+  _client = "Importer";
+  _version = version;
+  _hasLaunched = false;
+  _hasCancelled = false;
+  static #isLoaded = false;
 
   constructor(params: ContexerParams) {
-    super()
+    super();
 
-    this.#params = merge({}, DEFAULT_PARAMS, params)
+    this.#params = merge({}, DEFAULT_PARAMS, params);
 
     if (typeof window === "undefined") {
-      return
+      return;
     }
 
     if (this.#params.manageDOM) {
-      const iframeId = "_contexer-iframe"
-      this.iframe = document.getElementById(iframeId) as HTMLIFrameElement
+      const iframeId = "_contexer-iframe";
+      this.iframe = document.getElementById(iframeId) as HTMLIFrameElement;
       if (this.iframe) {
-        this.iframe.dataset.count = `${parseInt(this.iframe.dataset.count || "0") + 1}`
+        this.iframe.dataset.count = `${
+          parseInt(this.iframe.dataset.count || "0") + 1
+        }`;
       } else {
-        const iframe = document.createElement("iframe")
-        iframe.id = iframeId
-        iframe.dataset.count = "1"
-        this.setIframe(iframe)
+        const iframe = document.createElement("iframe");
+        iframe.id = iframeId;
+        iframe.dataset.count = "1";
+        this.setIframe(iframe);
       }
 
-      let parent = document.body
+      let parent = document.body;
       if (this.#params.parentId) {
-        parent = document.getElementById(this.#params.parentId) || parent
+        parent = document.getElementById(this.#params.parentId) || parent;
       }
 
-      this.setParent(parent)
+      this.setParent(parent);
     }
   }
 
@@ -62,8 +64,8 @@ export class ContexerImporterClass extends EventEmitter {
    * @param version
    */
   setClient(client: string, version: string) {
-    this._client = client
-    this._version = version
+    this._client = client;
+    this._version = version;
   }
 
   /**
@@ -74,31 +76,33 @@ export class ContexerImporterClass extends EventEmitter {
   setIframe(iframe: HTMLIFrameElement) {
     // just in case..
     if (this.iframe) {
-      this.close(true)
+      this.close(true);
     }
 
-    this.iframe = iframe
-    this.iframe.setAttribute("allowtransparency", "true")
+    this.iframe = iframe;
+    this.iframe.setAttribute("allowtransparency", "true");
 
-    const queryParams = []
-    queryParams.push(`embed_client_id=${this.#params.clientId}`)
-    queryParams.push(`dev_mode=${this.#params.devMode}`)
+    const queryParams = [];
+    queryParams.push(`embed_client_id=${this.#params.clientId}`);
+    queryParams.push(`dev_mode=${this.#params.devMode}`);
     if (this.#params.languageCode) {
-      queryParams.push(`lng=${this.#params.languageCode}`)
+      queryParams.push(`lng=${this.#params.languageCode}`);
     }
 
-    this.iframe.src = `${this.#params.baseUrl}/embed-launcher?${queryParams.join("&")}`
-    this.setClassName(this.#params.className || "")
+    this.iframe.src = `${
+      this.#params.baseUrl
+    }/embed-launcher?${queryParams.join("&")}`;
+    this.setClassName(this.#params.className || "");
     if (this.#params.styles) {
-      this.setStyles(this.#params.styles)
+      this.setStyles(this.#params.styles);
     }
 
-    ContexerImporterClass.#isLoaded = false
+    ContexerImporterClass.#isLoaded = false;
     this.iframe.onload = () => {
-      ContexerImporterClass.#isLoaded = true
-    }
+      ContexerImporterClass.#isLoaded = true;
+    };
 
-    this.#hide()
+    this.#hide();
   }
 
   /**
@@ -107,7 +111,7 @@ export class ContexerImporterClass extends EventEmitter {
    */
   setClassName(className: string) {
     if (this.iframe) {
-      this.iframe.className = className
+      this.iframe.className = className;
     }
   }
 
@@ -119,9 +123,9 @@ export class ContexerImporterClass extends EventEmitter {
     if (this.iframe) {
       // we save display because we use it for whether
       // the iframe is shown or not
-      const display = this.iframe.style.display
-      Object.assign(this.iframe.style, styles)
-      this.iframe.style.display = display
+      const display = this.iframe.style.display;
+      Object.assign(this.iframe.style, styles);
+      this.iframe.style.display = display;
     }
   }
 
@@ -132,7 +136,7 @@ export class ContexerImporterClass extends EventEmitter {
    */
   setParent(parent: HTMLElement) {
     if (this.iframe) {
-      parent.append(this.iframe)
+      parent.append(this.iframe);
     }
   }
 
@@ -141,29 +145,29 @@ export class ContexerImporterClass extends EventEmitter {
    * @param launchParams optionally pass in parameter overrides or values not passed into constructor
    */
   launch(launchParams?: Partial<ContexerLaunchParams>): ContexerLaunchStatus {
-    const mergedParams = merge({}, this.#params, launchParams)
-    const message: any = { messageType: "init" }
-    message.manualClose = true
-    message.customizationOverrides = mergedParams.customizationOverrides
+    const mergedParams = merge({}, this.#params, launchParams);
+    const message: any = { messageType: "init" };
+    message.manualClose = true;
+    message.customizationOverrides = mergedParams.customizationOverrides;
 
-    message.userJwt = mergedParams.userJwt
+    message.userJwt = mergedParams.userJwt;
     if (!message.userJwt) {
-      console.error("Contexer config error: missing userJwt")
-      return { success: false, error: ContexerLaunchError.MissingJwt }
+      console.error("Contexer config error: missing userJwt");
+      return { success: false, error: ContexerLaunchError.MissingJwt };
     }
 
-    message.templateKey = mergedParams.templateKey
+    message.templateKey = mergedParams.templateKey;
     if (!message.templateKey) {
-      console.error("Contexer config error: missing templateKey")
-      return { success: false, error: ContexerLaunchError.MissingTemplate }
+      console.error("Contexer config error: missing templateKey");
+      return { success: false, error: ContexerLaunchError.MissingTemplate };
     }
 
     if (mergedParams.importConfig) {
-      message.importConfig = mergedParams.importConfig
+      message.importConfig = mergedParams.importConfig;
     }
 
-    this._launch(message)
-    return { success: true }
+    this._launch(message);
+    return { success: true };
   }
 
   /**
@@ -172,61 +176,64 @@ export class ContexerImporterClass extends EventEmitter {
    * @param launchParams optionally pass in parameter overrides or values not passed into constructor
    */
   launchSession(
-    launchParams?: Partial<ContexerLaunchSessionParams>,
+    launchParams?: Partial<ContexerLaunchSessionParams>
   ): ContexerLaunchStatus {
-    const mergedParams = merge({}, this.#params, launchParams)
-    const message: any = { messageType: "init-session" }
-    message.manualClose = true
-    message.customizationOverrides = mergedParams.customizationOverrides
+    const mergedParams = merge({}, this.#params, launchParams);
+    const message: any = { messageType: "init-session" };
+    message.manualClose = true;
+    message.customizationOverrides = mergedParams.customizationOverrides;
 
-    message.sessionToken = mergedParams.sessionToken
+    message.sessionToken = mergedParams.sessionToken;
     if (!message.sessionToken) {
-      console.error("Contexer config error: missing sessionToken")
-      return { success: false, error: ContexerLaunchError.MissingSessionToken }
+      console.error("Contexer config error: missing sessionToken");
+      return { success: false, error: ContexerLaunchError.MissingSessionToken };
     }
 
-    this._launch(message)
-    return { success: true }
+    this._launch(message);
+    return { success: true };
   }
 
   _launch(message: any) {
-    window.addEventListener("message", this.#eventListener)
+    window.addEventListener("message", this.#eventListener);
 
     const postInit = () => {
-      this._hasCancelled = false
+      this._hasCancelled = false;
       this._initWithRetry({
         version: this._version,
         client: this._client,
         ...message,
-      })
-      ContexerImporterClass.#isLoaded = true
-    }
+      });
+      ContexerImporterClass.#isLoaded = true;
+    };
 
     if (ContexerImporterClass.#isLoaded) {
-      postInit()
+      postInit();
     } else if (this.iframe) {
-      this.iframe.onload = postInit
+      this.iframe.onload = postInit;
     }
   }
 
   _initWithRetry(message: any, count = 1) {
     if (this._hasLaunched || this._hasCancelled) {
-      return
+      return;
     }
 
     if (count > MAX_LAUNCH_RETRY) {
-      console.error("Contexer failed to respond for initialization")
+      console.error("Contexer failed to respond for initialization");
       if (this.#params.devMode) {
         // there might be some error in which case,
         // it's good to surface to devs
-        this.#show()
+        this.#show();
       }
 
-      return
+      return;
     }
 
-    this.iframe?.contentWindow?.postMessage(message, this.#params.baseUrl || "")
-    setTimeout(() => this._initWithRetry(message, count + 1), 500)
+    this.iframe?.contentWindow?.postMessage(
+      message,
+      this.#params.baseUrl || ""
+    );
+    setTimeout(() => this._initWithRetry(message, count + 1), 500);
   }
 
   /**
@@ -234,79 +241,81 @@ export class ContexerImporterClass extends EventEmitter {
    * @param clean will remove the iframe and event listeners if true
    */
   close(clean?: boolean) {
-    this.#hide()
+    this.#hide();
     if (this.iframe && ContexerImporterClass.#isLoaded) {
       this.iframe.contentWindow?.postMessage(
         { messageType: "close" },
-        this.#params.baseUrl || "",
-      )
+        this.#params.baseUrl || ""
+      );
     }
 
-    this._hasLaunched = false
-    this._hasCancelled = true
+    this._hasLaunched = false;
+    this._hasCancelled = true;
 
     if (clean && this.iframe) {
       if (!this.iframe.dataset.count || this.iframe.dataset.count === "1") {
-        this.removeAllListeners()
-        window.removeEventListener("message", this.#eventListener)
+        this.removeAllListeners();
+        window.removeEventListener("message", this.#eventListener);
         if (this.#params.manageDOM) {
-          this.iframe.remove()
+          this.iframe.remove();
         }
       } else {
-        this.iframe.dataset.count = `${parseInt(this.iframe.dataset.count || "1") - 1}`
+        this.iframe.dataset.count = `${
+          parseInt(this.iframe.dataset.count || "1") - 1
+        }`;
       }
     }
   }
 
   #hide() {
     if (this.iframe) {
-      this.iframe.style.display = "none"
+      this.iframe.style.display = "none";
     }
   }
 
   #show() {
     if (this.iframe) {
-      this.iframe.style.display = "initial"
+      this.iframe.style.display = "initial";
     }
   }
 
   #eventListener = (event: MessageEvent) => {
     if (event.source !== this.iframe?.contentWindow) {
-      return
+      return;
     }
 
     switch (event.data.messageType) {
       case "launched": {
-        this._hasLaunched = true
-        this.emit("launched")
-        this.#show()
-        break
+        this._hasLaunched = true;
+        this.emit("launched");
+        this.#show();
+        break;
       }
       case "complete": {
-        this.emit("success", event.data.data)
+        this.emit("success", event.data.data);
         if (this.#params.autoClose) {
-          this.close()
+          this.close();
         }
 
-        break
+        break;
       }
       case "cancel": {
-        this.emit("cancel")
+        this.emit("cancel");
         if (this.#params.autoClose) {
-          this.close()
+          this.close();
         }
 
-        break
+        break;
       }
       case "error": {
-        this.emit("error", event.data.message)
+        this.emit("error", event.data.message);
         if (this.#params.autoClose) {
-          this.close()
+          this.close();
         }
-        break
+        break;
       }
     }
-  }
+  };
 }
 
 /**
@@ -314,7 +323,7 @@ export class ContexerImporterClass extends EventEmitter {
  * @returns an instance of the ContexerImporter
  */
 export default function contexerHelpCenter(
-  params: ContexerParams,
+  params: ContexerParams
 ): ContexerImporterClass {
-  return new ContexerImporterClass(params)
+  return new ContexerImporterClass(params);
 }
