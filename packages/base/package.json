@@ -1,6 +1,16 @@
 {
   "name": "@contexer/base",
   "version": "0.0.0",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/main.umd.cjs",
+  "module": "./dist/main.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.umd.cjs"
+    }
+  },
   "scripts": {},
   "dependencies": {
     "debug": "^4.3.4",
@@ -11,6 +21,7 @@
     "eslint": "7.32.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.3"
+    "typescript": "^4.5.3",
+    "vite": "^4.0.0"
   }
 }

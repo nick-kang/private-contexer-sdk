@@ -51,6 +51,7 @@ importers:
       eventemitter3: ^5.0.0
       tsconfig: workspace:*
       typescript: ^4.5.3
+      vite: ^4.0.0
     dependencies:
       debug: 4.3.4
       eventemitter3: 5.0.0
@@ -60,6 +61,7 @@ importers:
       eslint-config-custom: link:../../shared/eslint-config-custom
       tsconfig: link:../../shared/tsconfig
       typescript: 4.9.4
+      vite: 4.0.1
 
   packages/react:
     specifiers:
