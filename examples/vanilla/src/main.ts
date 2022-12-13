@@ -1,11 +1,10 @@
 import './style.css'
-import { setupCounter } from './counter'
-import {} from '@contexer/base'
+import { setupHelpCenter } from './setupHelpCenter'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <button>Click me</button>
+    <button id="help">Click me</button>
   </div>
 `
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+setupHelpCenter(document.querySelector<HTMLButtonElement>('#help')!)
