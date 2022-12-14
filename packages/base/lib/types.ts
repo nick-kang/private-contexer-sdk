@@ -1,6 +1,6 @@
 export interface ContexerDialogParams {
   baseUrl: string;
-  clientId: string;
+  publicKey: string;
 }
 
 export interface OpenMessage {

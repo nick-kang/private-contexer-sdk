@@ -1,92 +1,108 @@
 import EventEmitter from "eventemitter3";
-import Debug from "debug";
 import { ContexerDialogParams, ContexerMessage } from "./types";
+import { logger } from "@contexer/logger";
 
-const debug = Debug("contexer");
+const IFRAME_ID = "_contexer-iframe";
 
 export class ContexerDialogClass extends EventEmitter<
   ContexerMessage["messageType"]
 > {
-  public iframe?: HTMLIFrameElement;
-  private baseUrl: string;
-  private clientId: string;
-  private devMode = false;
-  private isLoaded = false;
-  private client = "Dialog";
+  public iframe: HTMLIFrameElement;
 
-  constructor(params: ContexerDialogParams) {
+  constructor(private readonly params: ContexerDialogParams) {
     super();
-    this.baseUrl = params.baseUrl;
-    this.clientId = params.clientId;
-
     if (window == null) {
-      debug("Unable to initialize because window is undefined");
+      logger.warn("Window is undefined.");
+    }
+
+    const maybeIframe = document.getElementById(IFRAME_ID);
+
+    if (maybeIframe instanceof HTMLIFrameElement) {
+      logger.debug("iframe already created.");
+      this.iframe = maybeIframe;
       return;
-    }
-
-    const iframeId = "_contexer-iframe";
-    this.iframe = document.getElementById(iframeId) as HTMLIFrameElement;
-
-    if (this.iframe) {
-      const count = parseInt(this.iframe.dataset.count || "0", 10);
-
-      if (isNaN(count)) {
-        debug(
-          `Invalid value in this.iframe.dataset.count. Expected number but got ${this.iframe.dataset.count}`
-        );
-      }
-
-      const nextCount = isNaN(count) ? String(count + 1) : "1";
-      this.iframe.dataset.count = nextCount;
     } else {
+      logger.debug("iframe not found. Creating one.");
+
       const iframe = document.createElement("iframe");
-      iframe.id = iframeId;
-      iframe.dataset.count = "1";
-      this.setIframe(iframe);
+      iframe.id = IFRAME_ID;
+
+      this.iframe = iframe;
+      this.iframe.setAttribute("allowtransparency", "true");
+
+      // Add base styles
+      this.iframe.style.visibility = "hidden";
+      this.iframe.style.position = "absolute";
+      this.iframe.style.right = "10px";
+      this.iframe.style.top = "10px";
+      this.iframe.style.border = "none";
+      this.iframe.style.height = "100%";
+
+      const url = new URL(this.params.baseUrl);
+      url.searchParams.set("public_key", this.params.publicKey);
+
+      this.iframe.src = url.href;
     }
 
-    const parent = document.body 
-    console.log('hit')
-    parent.append(this.iframe)
+    this.createElements().catch((e) => console.error(e));
   }
 
-  private setIframe(iframe: HTMLIFrameElement): void {
-    if (this.iframe) {
-      debug("iframe is already set");
-      // TODO: this.close(true)
+  private async createElements(): Promise<void> {
+    const root = document.createElement("div");
+    root.id = "contexer-root";
+    document.body.appendChild(root);
+
+    const manifest: Record<string, any> = await fetch(
+      new URL("manifest.json", this.params.baseUrl)
+    ).then((res) => res.json());
+
+    const html = Object.values(manifest).find((m) => m.isEntry);
+
+    if (html) {
+      const scriptPath = html.file as string;
+      const cssPaths = html.css as string[];
+
+      const script = document.createElement("script");
+      script.src = new URL(scriptPath, this.params.baseUrl).href;
+      script.async = true;
+      script.type = "module";
+      script.onload = () => {
+        window.postMessage({ messageType: "open" });
+      };
+      document.head.appendChild(script);
+
+      cssPaths.forEach((cssPath) => {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = new URL(cssPath, this.params.baseUrl).href;
+        document.head.appendChild(link);
+      });
     }
-
-    this.iframe = iframe;
-    this.iframe.setAttribute("allowtransparency", "true");
-
-    const url = new URL(this.baseUrl);
-
-    url.searchParams.set("embed_client_id", this.clientId);
-    url.searchParams.set("dev_mode", String(this.devMode));
-
-    this.iframe.src = url.href;
-    this.isLoaded = false;
-    this.iframe.onload = () => {
-      this.isLoaded = true;
-    };
-
-    // TODO: this.hide()
   }
 
-  /**
-   * open
-   */
   public open() {
-    this.launch();
+    this.iframe.style.visibility = "visible";
+    this.iframe.style.display = "block";
+    window.addEventListener("message", this.eventListener, false);
+    // window.document.removeEventListener("mouseup", this.close);
+    window.document.addEventListener("mouseup", () => {
+      this.iframe.style.visibility = "hidden";
+      this.iframe.style.display = "none";
+    });
   }
 
-  private launch() {
-    window.addEventListener("message", this.eventListener);
+  private hide(): void {
+    this.iframe.style.visibility = "hidden";
+    this.iframe.style.display = "none";
+  }
+
+  get isOpen(): boolean {
+    return this.iframe.style.visibility === "visible";
   }
 
   private eventListener(event: MessageEvent): void {
     if (event.source !== this.iframe?.contentWindow) {
-      debug(
+      logger.debug(
         `Expected event source to equal ${this.iframe?.contentWindow}, but got ${event.source}`
       );
       return;
@@ -100,7 +116,8 @@ export class ContexerDialogClass extends EventEmitter<
         break;
 
       case "close":
-        this.emit("close");
+        // this.emit("close");
+        this.close();
         break;
 
       case "error":
@@ -108,7 +125,7 @@ export class ContexerDialogClass extends EventEmitter<
         break;
 
       default:
-        debug(`Invalid message: ${JSON.stringify(message)}`);
+        logger.debug(`Invalid message: ${JSON.stringify(message)}`);
     }
   }
 }
