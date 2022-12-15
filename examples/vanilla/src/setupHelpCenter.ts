@@ -7,6 +7,7 @@ export function setupHelpCenter(element: HTMLButtonElement) {
   });
 
   element.addEventListener("click", () => {
+    console.log("Click");
     helpCenter.open();
   });
 }

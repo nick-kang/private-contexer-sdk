@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  vanilla:
+    build: .
+    container_name: vanilla
+    network_mode: host
+    ports:
+      - "3004:3004"
+    volumes:
+      - .:/app
+    command: ["pnpm", "vanilla", "dev"]
+    depends_on:
+      - base
+
+  base:
+    build: .
+    container_name: base
+    volumes:
+      - .:/app
+    command: ["pnpm", "base", "dev"]

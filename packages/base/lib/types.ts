@@ -3,6 +3,13 @@ export interface ContexerDialogParams {
   publicKey: string;
 }
 
+export interface InitMessage {
+  messageType: "init";
+  data: {
+    publicKey: string;
+  };
+}
+
 export interface OpenMessage {
   messageType: "open";
 }
@@ -11,7 +18,6 @@ export interface CloseMessage {
   messageType: "close";
 }
 
-
 export interface ErrorMessage {
   messageType: "error";
 }
@@ -19,4 +25,5 @@ export interface ErrorMessage {
 export type ContexerMessage =
   | OpenMessage
   | CloseMessage
-  | ErrorMessage;
+  | ErrorMessage
+  | InitMessage;

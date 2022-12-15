@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
@@ -11,9 +11,12 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "---------workspaces---------": "",
+    "---------packages---------": "",
+    "base": "pnpm --filter \"base\"",
     "logger": "pnpm --filter \"logger\"",
-    "base": "pnpm --filter \"base\""
+    "---------examples---------": "",
+    "react": "pnpm --filter \"@example/react\"",
+    "vanilla": "pnpm --filter \"@example/vanilla\""
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
