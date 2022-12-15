@@ -1,10 +1,4 @@
 import "./style.css";
-import { setupHelpCenter } from "./setupHelpCenter";
-
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <button id="help">Click me</button>
-  </div>
-`;
+import { setupHelpCenter } from "./actions";
 
 setupHelpCenter(document.querySelector<HTMLButtonElement>("#help")!);
