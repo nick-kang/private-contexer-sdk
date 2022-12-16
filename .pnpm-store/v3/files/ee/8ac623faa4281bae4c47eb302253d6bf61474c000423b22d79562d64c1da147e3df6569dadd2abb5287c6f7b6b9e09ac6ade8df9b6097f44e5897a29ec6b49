@@ -1,0 +1,24 @@
+{
+    "name": "@types/quick-format-unescaped",
+    "version": "4.0.0",
+    "description": "TypeScript definitions for quick-format-unescaped",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Adam Vigneaux",
+            "url": "https://github.com/AdamVig",
+            "githubUsername": "AdamVig"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/quick-format-unescaped"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "6a3f88bcb4de631720ac3a7157bbd8131a35a61a6930650bbb7c313f86548e87",
+    "typeScriptVersion": "3.2"
+}

@@ -1,0 +1,16 @@
+# Installation
+> `npm install --save @types/quick-format-unescaped`
+
+# Summary
+This package contains type definitions for quick-format-unescaped (https://github.com/davidmarkclements/quick-format-unescaped#readme).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/quick-format-unescaped.
+
+### Additional Details
+ * Last updated: Mon, 28 Sep 2020 21:40:17 GMT
+ * Dependencies: none
+ * Global values: none
+
+# Credits
+These definitions were written by [Adam Vigneaux](https://github.com/AdamVig).
