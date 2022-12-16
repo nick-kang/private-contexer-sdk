@@ -1,6 +1,7 @@
 import EventEmitter from "eventemitter3";
 import { ContexerDialogParams, ContexerMessage } from "./types";
 import { logger } from "@contexer/logger";
+import { ELEMENT_ID, MANIFEST_FILENAME } from "./constants";
 
 export class ContexerDialogClass extends EventEmitter<
   ContexerMessage["messageType"]
@@ -15,11 +16,11 @@ export class ContexerDialogClass extends EventEmitter<
 
   private async createElements(): Promise<void> {
     const root = document.createElement("div");
-    root.id = "contexer-root";
+    root.id = ELEMENT_ID;
     document.body.appendChild(root);
 
     const manifest: Record<string, any> = await fetch(
-      new URL("manifest.json", this.params.baseUrl)
+      new URL(MANIFEST_FILENAME, this.params.baseUrl)
     ).then((res) => res.json());
 
     const html = Object.values(manifest).find((m) => m.isEntry);
