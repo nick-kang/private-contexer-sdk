@@ -14,6 +14,7 @@ temp
 out/
 build
 dist 
+.npmrc
 
 # misc
 .DS_Store
