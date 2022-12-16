@@ -20,6 +20,9 @@ export interface CloseMessage {
 
 export interface ErrorMessage {
   messageType: "error";
+  data: {
+    message: string;
+  };
 }
 
 export type ContexerMessage =
