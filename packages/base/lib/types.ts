@@ -6,6 +6,7 @@ export interface ContexerDialogParams {
 export interface InitMessage {
   messageType: "init";
   data: {
+    /** User public key */
     publicKey: string;
   };
 }
@@ -20,6 +21,9 @@ export interface CloseMessage {
 
 export interface ErrorMessage {
   messageType: "error";
+  data: {
+    message: string;
+  };
 }
 
 export type ContexerMessage =
