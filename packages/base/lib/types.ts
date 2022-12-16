@@ -6,6 +6,7 @@ export interface ContexerDialogParams {
 export interface InitMessage {
   messageType: "init";
   data: {
+    /** User public key */
     publicKey: string;
   };
 }
