@@ -11,6 +11,7 @@ export class ContexerDialogClass extends EventEmitter<
     if (window == null) {
       logger.warn("window is undefined");
     }
+    // TODO: add blocking
     this.createElements().catch((e) => console.error(e));
   }
 
