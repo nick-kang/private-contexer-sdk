@@ -9,7 +9,7 @@ export class ContexerDialogClass extends EventEmitter<
   constructor(private readonly params: ContexerDialogParams) {
     super();
     if (window == null) {
-      logger.warn("Window is undefined.");
+      logger.warn("Window is undefined");
     }
     this.createElements().catch((e) => console.error(e));
   }
