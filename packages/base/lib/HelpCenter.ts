@@ -1,6 +1,6 @@
 import EventEmitter from "eventemitter3";
 import { ContexerDialogParams, ContexerMessage } from "./types";
-import { logger } from "@contexter-test/logger";
+import { logger } from "@duck-duck-goose/logger";
 import { ELEMENT_ID, MANIFEST_FILENAME } from "./constants";
 
 export class ContexerDialogClass extends EventEmitter<
