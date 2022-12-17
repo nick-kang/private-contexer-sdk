@@ -1,5 +1,11 @@
 # @contexer/base
 
+## 0.0.4
+
+### Patch Changes
+
+- [#9](https://github.com/nick-kang/private-contexer-sdk/pull/9) [`e55a3e9`](https://github.com/nick-kang/private-contexer-sdk/commit/e55a3e9cb9fca2f4b641637375fcec117755ffd6) Thanks [@nick-kang](https://github.com/nick-kang)! - update message
+
 ## 0.0.3
 
 ### Patch Changes
