@@ -1,6 +1,7 @@
 {
-  "name": "@contexer/react",
+  "name": "@contexer-temp/react",
   "version": "0.0.0",
+  "private": true,
   "scripts": {},
   "dependencies": {},
   "peerDependencies": {

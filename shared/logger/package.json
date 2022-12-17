@@ -1,5 +1,6 @@
 {
-  "name": "@contexer/logger",
+  "name": "@contexer-temp/logger",
+  "version": "0.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
