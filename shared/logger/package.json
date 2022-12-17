@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/quick-format-unescaped": "^4.0.0",
-    "eslint": "8.29.0",
+    "eslint": "8.30.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "4.9.4"
