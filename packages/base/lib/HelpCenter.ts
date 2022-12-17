@@ -55,7 +55,10 @@ export class ContexerDialogClass extends EventEmitter<
 
       cssPaths.forEach((cssPath) => {
         if (typeof cssPath !== "string") {
-          logger.error({ data: html }, "Expected css path to be a string");
+          logger.error(
+            { data: { html, cssPath } },
+            "Expected css path to be a string"
+          );
           return;
         }
         const link = document.createElement("link");
