@@ -1,8 +1,6 @@
 {
-  "name": "@example/vanilla",
   "private": true,
   "type": "module",
-  "version": "0.0.3",
   "scripts": {
     "dev": "vite --port 3004",
     "build": "tsc && vite build",
