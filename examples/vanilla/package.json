@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@contexer-temp/base": "workspace:*"
+    "@contexter-test/base": "workspace:*"
   },
   "devDependencies": {
     "typescript": "4.9.4",

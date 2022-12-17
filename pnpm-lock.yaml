@@ -37,18 +37,18 @@ importers:
 
   examples/vanilla:
     specifiers:
-      '@contexer-temp/base': workspace:*
+      '@contexter-test/base': workspace:*
       typescript: 4.9.4
       vite: ^4.0.1
     dependencies:
-      '@contexer-temp/base': link:../../packages/base
+      '@contexter-test/base': link:../../packages/base
     devDependencies:
       typescript: 4.9.4
       vite: 4.0.1
 
   packages/base:
     specifiers:
-      '@contexer-temp/logger': workspace:*
+      '@contexter-test/logger': workspace:*
       eslint: 8.29.0
       eslint-config-custom: workspace:*
       eventemitter3: ^5.0.0
@@ -58,7 +58,7 @@ importers:
       typescript: 4.9.4
       vite: ^4.0.1
     dependencies:
-      '@contexer-temp/logger': link:../../shared/logger
+      '@contexter-test/logger': link:../../shared/logger
       eventemitter3: 5.0.0
       iframe-resizer: 4.3.2
     devDependencies:
