@@ -1,5 +1,12 @@
 # @example/vanilla
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`fb20c18`](https://github.com/nick-kang/private-contexer-sdk/commit/fb20c18481e75e8bc70a3ecd9863f7c3dd85bbcb)]:
+  - @contexter-test/base@0.0.2
+
 ## 0.0.1
 
 ### Patch Changes
