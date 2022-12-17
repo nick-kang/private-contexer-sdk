@@ -1,5 +1,12 @@
 # @example/vanilla
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`e55a3e9`](https://github.com/nick-kang/private-contexer-sdk/commit/e55a3e9cb9fca2f4b641637375fcec117755ffd6)]:
+  - @duck-duck-goose/base@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
