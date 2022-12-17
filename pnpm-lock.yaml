@@ -37,18 +37,18 @@ importers:
 
   examples/vanilla:
     specifiers:
-      '@contexter-test/base': workspace:*
+      '@duck-duck-goose/base': workspace:*
       typescript: 4.9.4
       vite: ^4.0.1
     dependencies:
-      '@contexter-test/base': link:../../packages/base
+      '@duck-duck-goose/base': link:../../packages/base
     devDependencies:
       typescript: 4.9.4
       vite: 4.0.1
 
   packages/base:
     specifiers:
-      '@contexter-test/logger': workspace:*
+      '@duck-duck-goose/logger': workspace:*
       eslint: 8.29.0
       eslint-config-custom: workspace:*
       eventemitter3: ^5.0.0
@@ -58,7 +58,7 @@ importers:
       typescript: 4.9.4
       vite: ^4.0.1
     dependencies:
-      '@contexter-test/logger': link:../../shared/logger
+      '@duck-duck-goose/logger': link:../../shared/logger
       eventemitter3: 5.0.0
       iframe-resizer: 4.3.2
     devDependencies:
