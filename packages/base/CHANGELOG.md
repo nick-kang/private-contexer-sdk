@@ -1,5 +1,11 @@
 # @contexer/base
 
+## 0.0.7
+
+### Patch Changes
+
+- [`0065368`](https://github.com/contexer/private-sdk/commit/00653684f12ef798f0c7a576fbbeb0d0dd5b162b) Thanks [@nickkang1](https://github.com/nickkang1)! - test
+
 ## 0.0.6
 
 ### Patch Changes
