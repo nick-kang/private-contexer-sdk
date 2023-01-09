@@ -1,5 +1,11 @@
 # @example/vanilla
 
+## 0.0.7
+
+### Patch Changes
+
+- [#15](https://github.com/contexer/private-sdk/pull/15) [`df1fd17`](https://github.com/contexer/private-sdk/commit/df1fd171f5c0697878730f69ba669bc28b883761) Thanks [@nick-kang](https://github.com/nick-kang)! - fix import
+
 ## 0.0.6
 
 ### Patch Changes
