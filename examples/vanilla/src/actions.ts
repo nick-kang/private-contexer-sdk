@@ -1,4 +1,4 @@
-import { ContexerDialogClass } from "@contexer/base";
+import { ContexerDialogClass } from "@duck-duck-goose/base";
 
 export const helpCenter = new ContexerDialogClass({
   baseUrl: "http://localhost:4003",
