@@ -44,8 +44,11 @@ jobs:
       - name: install dependencies
         run: pnpm install
 
-      - name: setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+      - name: build
+        run: pnpm build
+
+      # - name: setup npmrc
+      #   run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: create and publish versions
         uses: changesets/action@v1
